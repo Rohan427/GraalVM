@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 7.251 s <<< FAILURE! - in com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest
+findProductsByCategory(com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest)  Time elapsed: 0.575 s  <<< FAILURE!
+java.lang.AssertionError
+	at com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest.findProductsByCategory(ProductsControllerTest.java:927)
+
+findProductsByCategoryAndAvailability(com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest)  Time elapsed: 0.073 s  <<< FAILURE!
+java.lang.AssertionError
+	at com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest.findProductsByCategoryAndAvailability(ProductsControllerTest.java:1038)
+
+findAllProducts(com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest)  Time elapsed: 0.077 s  <<< FAILURE!
+java.lang.AssertionError
+	at com.hackerrank.eshopping.product.dashboard.controller.ProductsControllerTest.findAllProducts(ProductsControllerTest.java:1323)
+
