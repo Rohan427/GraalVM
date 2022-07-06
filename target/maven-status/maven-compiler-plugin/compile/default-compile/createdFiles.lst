@@ -1,8 +1,9 @@
-com\hackerrank\eshopping\product\dashboard\Application.class
-com\hackerrank\eshopping\product\dashboard\controller\ProductsController.class
-com\hackerrank\eshopping\product\dashboard\model\Product.class
-com\hackerrank\eshopping\product\dashboard\interfaces\ProductDao.class
-com\hackerrank\eshopping\product\dashboard\model\ProductModel.class
-com\hackerrank\eshopping\product\dashboard\service\ProductService.class
-com\hackerrank\eshopping\product\dashboard\DebugLogger.class
-com\hackerrank\eshopping\product\dashboard\model\UpdateData.class
+com/hackerrank/eshopping/product/dashboard/interfaces/ProductDao.class
+com/hackerrank/eshopping/product/dashboard/model/UpdateData.class
+com/hackerrank/eshopping/product/dashboard/Application.class
+com/hackerrank/eshopping/product/dashboard/model/Product.class
+com/hackerrank/eshopping/product/dashboard/model/ProductModel.class
+com/hackerrank/eshopping/product/dashboard/controller/ProductsController.class
+com/hackerrank/eshopping/product/dashboard/model/Status.class
+com/hackerrank/eshopping/product/dashboard/DebugLogger.class
+com/hackerrank/eshopping/product/dashboard/service/ProductService.class

@@ -10,7 +10,6 @@ import com.hackerrank.eshopping.product.dashboard.interfaces.ProductDao;
 import com.hackerrank.eshopping.product.dashboard.model.Product;
 import com.hackerrank.eshopping.product.dashboard.model.ProductModel;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.BeanUtils;
@@ -135,7 +134,7 @@ public class ProductService
         Product productData;
 
 //        modelList = productDao.findByCategoryAndAvailability (category, availability);
-        modelList = productDao.findByCategory (category);
+        modelList = productDao.findByCategoryAndAvailability (category, availability);
 
         for (ProductModel model : modelList)
         {

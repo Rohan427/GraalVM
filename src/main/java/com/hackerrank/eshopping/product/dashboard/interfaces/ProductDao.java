@@ -5,7 +5,6 @@
  */
 package com.hackerrank.eshopping.product.dashboard.interfaces;
 
-import com.hackerrank.eshopping.product.dashboard.model.Product;
 import com.hackerrank.eshopping.product.dashboard.model.ProductModel;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;

@@ -2,13 +2,13 @@ package com.hackerrank.eshopping.product.dashboard.controller;
 
 import com.hackerrank.eshopping.product.dashboard.DebugLogger;
 import com.hackerrank.eshopping.product.dashboard.model.Product;
+import com.hackerrank.eshopping.product.dashboard.model.Status;
 import com.hackerrank.eshopping.product.dashboard.model.UpdateData;
 import com.hackerrank.eshopping.product.dashboard.service.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * availability:        Is product in stock
  *
  * @author Paul G. Allen <pgallen@gmail.com>
+ * 
  */
 
 @RestController
@@ -35,11 +36,12 @@ public class ProductsController
      * Adds a new product. The product JSON is in the request body.
      * @param product
      * @return Status code 400 if product exists, 201 otherwise
+     * 
      */
     @PostMapping (value = "/products")
     public ResponseEntity<String> addProduct (@RequestBody Product product)
     {
-        ResponseEntity response = new ResponseEntity<> (HttpStatus.CREATED);
+        ResponseEntity<String> response = new ResponseEntity<> (HttpStatus.CREATED);
         Product newProd;
 
         DebugLogger.debug (DEBUG, "In addProduct");
@@ -69,11 +71,12 @@ public class ProductsController
      *
      * @param product_id
      * @return 200 on success, 404 otherwise
+     * 
      */
     @GetMapping (value = "/products/{product_id}")
-    public ResponseEntity<String> getProductById (@PathVariable Long product_id)
+    public ResponseEntity<Product> getProductById (@PathVariable Long product_id)
     {
-        ResponseEntity response;
+        ResponseEntity<Product> response;
         Product product;
 
         DebugLogger.debug (DEBUG, "In getProductById");
@@ -110,11 +113,12 @@ public class ProductsController
      * @param updateData
      * @param id
      * @return Status 200 if updated, 400 if not exist
+     * 
      */
     @PutMapping (value = "/products/{product_id}")
     public ResponseEntity<String> updateProduct (@PathVariable Long product_id, @RequestBody UpdateData updateData)
     {
-        ResponseEntity response = new ResponseEntity<> (HttpStatus.OK);
+        ResponseEntity<String> response = new ResponseEntity<> (HttpStatus.OK);
         Product product;
 
         DebugLogger.debug (DEBUG, "In updateProduct");
@@ -166,6 +170,7 @@ public class ProductsController
      *
      * @param category
      * @return Status code 200
+     * 
      */
     @GetMapping (value = "/products", params = {"category"})
     public ResponseEntity<List<Product>> getProductsByCategory (@RequestParam (value = "category") String category)
@@ -189,6 +194,7 @@ public class ProductsController
      * @param category
      * @param availability
      * @return
+     * 
      */
     @GetMapping (value = "/products",  params = {"category", "availability"})
     public ResponseEntity<List<Product>> getproductByCatAndAvail (@RequestParam (value = "category") String category, @RequestParam (value = "availability") boolean availability)
@@ -206,6 +212,7 @@ public class ProductsController
      * Get all products. Sort by product ID in ascending order
      *
      * @return Status 200 with list of products
+     * 
      */
     @GetMapping (value = "/products")
     public ResponseEntity<List<Product>> getProducts()
@@ -215,5 +222,21 @@ public class ProductsController
         DebugLogger.debug (DEBUG, "In getProducts");
 
         return new ResponseEntity<> (prodList, HttpStatus.OK);
+    }
+    
+    /**
+     * Check the status of the system
+     * 
+     * @return status of 200 and a status message
+     * 
+     */
+    @GetMapping (value = "/status")
+    public ResponseEntity<Status> getStatus()
+    {
+        Status status = new Status();
+        
+        DebugLogger.debug (DEBUG, "In getStatus");
+        
+        return new ResponseEntity<> (status, HttpStatus.OK);
     }
 }
