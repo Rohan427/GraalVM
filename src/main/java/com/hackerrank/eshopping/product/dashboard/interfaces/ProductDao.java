@@ -7,14 +7,17 @@ package com.hackerrank.eshopping.product.dashboard.interfaces;
 
 import com.hackerrank.eshopping.product.dashboard.model.ProductModel;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Paul G. Allen <pgallen@gmail.com>
  */
-public interface ProductDao extends CrudRepository<ProductModel, Long>
+@Repository
+public interface ProductDao extends JpaRepository<ProductModel, Long>
 {
     @Query ("SELECT p FROM Product p WHERE category = ?1 ORDER BY availability desc, discounted_price asc, id asc")
     List<ProductModel> findByCategory (String category);
