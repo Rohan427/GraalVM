@@ -156,9 +156,9 @@ public class ProductService implements Serializable
         productDao.deleteById (id);
     }
     
-    @Transactional
+//    @Transactional
     public void truncateTable()
     {
-        productDao.truncateTable();
+//        productDao.truncateTable();
     }
 }
