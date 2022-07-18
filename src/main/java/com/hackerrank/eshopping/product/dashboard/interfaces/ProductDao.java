@@ -9,6 +9,7 @@ import com.hackerrank.eshopping.product.dashboard.model.ProductModel;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +25,11 @@ public interface ProductDao extends JpaRepository<ProductModel, Long>
 
     @Query ("SELECT p FROM Product p WHERE category = ?1 AND availability = ?2 ORDER BY discount_percent desc, discounted_price asc, id asc")
     List<ProductModel> findByCategoryAndAvailability (String category, boolean availability);
+    
+    @Modifying
+    @Query(
+            value = "truncate table Product",
+            nativeQuery = true
+    )
+    void truncateTable();
 }

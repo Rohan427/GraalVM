@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(OrderedTestRunner.class)
@@ -60,6 +61,28 @@ public class ProductsControllerTest
          */
         String json = "{\"id\": 1, \"name\": \"Dressing Gown\", \"category\": \"Full Body Outfits\", \"retail_price\": 303.0, \"discounted_price\": 251.49, \"availability\": true}";
 
+        // Verify database is empty
+        String res = "[]";
+        
+        mockMvc.perform (delete ("/clear"))
+        .andExpect (status().isOk());
+        
+        assertTrue
+        (
+            ResultMatcher.matchJsonArray
+            (
+                mockMvc.perform (get ("/products"))
+                       .andExpect (status().isOk())
+                       .andReturn()
+                       .getResponse()
+                       .getContentAsString(),
+                res,
+                true
+            )
+        );
+        
+        // Create each product
+        
         mockMvc.perform
         (
             post ("/products")
@@ -1139,13 +1162,13 @@ public class ProductsControllerTest
     @Order(18)
     public void findAllProducts() throws Exception 
     {
-        String res = "[{\"id\":1,\"name\":\"Dressing Gown\",\"category\":\"Full Body Outfits\",\"retail_price\":303.0,\"discounted_price\":251.49,\"discount_percent\":100,\"availability\":true},{\"id\":2,\"name\":\"Shoes\",\"category\":\"Footwear\",\"retail_price\":150.0,\"discounted_price\":123.0,\"discount_percent\":18,\"availability\":false},{\"id\":3,\"name\":\"Nightgown\",\"category\":\"Full Body Outfits\",\"retail_price\":307.0,\"discounted_price\":254.81,\"discount_percent\":100,\"availability\":true},{\"id\":4,\"name\":\"Boots\",\"category\":\"Footwear\",\"retail_price\":162.0,\"discounted_price\":132.84,\"discount_percent\":100,\"availability\":true},{\"id\":5,\"name\":\"Ball Gown\",\"category\":\"Full Body Outfits\",\"retail_price\":337.0,\"discounted_price\":272.97,\"discount_percent\":100,\"availability\":true},{\"id\":6,\"name\":\"Shawl\",\"category\":\"Accessories\",\"retail_price\":325.45,\"discounted_price\":260.36,\"discount_percent\":7,\"availability\":true},{\"id\":7,\"name\":\"Belt\",\"category\":\"Accessories\",\"retail_price\":471.0,\"discounted_price\":419.19,\"discount_percent\":100,\"availability\":true},{\"id\":8,\"name\":\"Kaftan\",\"category\":\"Accessories\",\"retail_price\":237.0,\"discounted_price\":215.67,\"discount_percent\":100,\"availability\":true},{\"id\":9,\"name\":\"Overalls\",\"category\":\"Full Body Outfits\",\"retail_price\":374.0,\"discounted_price\":321.64,\"discount_percent\":100,\"availability\":true},{\"id\":10,\"name\":\"Cufflinks\",\"category\":\"Accessories\",\"retail_price\":284.0,\"discounted_price\":227.2,\"discount_percent\":20,\"availability\":true},{\"id\":11,\"name\":\"Cargos\",\"category\":\"Bottoms\",\"retail_price\":498.0,\"discounted_price\":428.28,\"discount_percent\":100,\"availability\":true},{\"id\":12,\"name\":\"Poncho\",\"category\":\"Accessories\",\"retail_price\":350.0,\"discounted_price\":283.5,\"discount_percent\":19,\"availability\":true},{\"id\":13,\"name\":\"Cummerbund\",\"category\":\"Accessories\",\"retail_price\":500.0,\"discounted_price\":450.0,\"discount_percent\":8,\"availability\":false},{\"id\":14,\"name\":\"Dress\",\"category\":\"Full Body Outfits\",\"retail_price\":175.0,\"discounted_price\":140.0,\"discount_percent\":100,\"availability\":true},{\"id\":15,\"name\":\"Trainers\",\"category\":\"Footwear\",\"retail_price\":228.0,\"discounted_price\":184.68,\"discount_percent\":100,\"availability\":true},{\"id\":16,\"name\":\"Tracksuit\",\"category\":\"Full Body Outfits\",\"retail_price\":471.0,\"discounted_price\":423.9,\"discount_percent\":100,\"availability\":false},{\"id\":17,\"name\":\"Tailcoat\",\"category\":\"Full Body Outfits\",\"retail_price\":307.0,\"discounted_price\":254.81,\"discount_percent\":100,\"availability\":true},{\"id\":18,\"name\":\"Vest\",\"category\":\"Tops\",\"retail_price\":446.0,\"discounted_price\":392.48,\"discount_percent\":100,\"availability\":true},{\"id\":19,\"name\":\"Suit\",\"category\":\"Full Body Outfits\",\"retail_price\":125.0,\"discounted_price\":100.0,\"discount_percent\":36,\"availability\":false},{\"id\":20,\"name\":\"Catsuit\",\"category\":\"Full Body Outfits\",\"retail_price\":250.0,\"discounted_price\":200.0,\"discount_percent\":14,\"availability\":false},{\"id\":21,\"name\":\"Dungarees\",\"category\":\"Full Body Outfits\",\"retail_price\":437.0,\"discounted_price\":362.71,\"discount_percent\":100,\"availability\":false}]";
+        String res = "[{\"id\":1,\"name\":\"Dressing Gown\",\"category\":\"Full Body Outfits\",\"retail_price\":303.0,\"discounted_price\":251.49,\"discount_percent\":100,\"availability\":true},{\"id\":3,\"name\":\"Nightgown\",\"category\":\"Full Body Outfits\",\"retail_price\":307.0,\"discounted_price\":254.81,\"discount_percent\":100,\"availability\":true},{\"id\":4,\"name\":\"Boots\",\"category\":\"Footwear\",\"retail_price\":162.0,\"discounted_price\":132.84,\"discount_percent\":100,\"availability\":true},{\"id\":5,\"name\":\"Ball Gown\",\"category\":\"Full Body Outfits\",\"retail_price\":337.0,\"discounted_price\":272.97,\"discount_percent\":100,\"availability\":true},{\"id\":7,\"name\":\"Belt\",\"category\":\"Accessories\",\"retail_price\":471.0,\"discounted_price\":419.19,\"discount_percent\":100,\"availability\":true},{\"id\":8,\"name\":\"Kaftan\",\"category\":\"Accessories\",\"retail_price\":237.0,\"discounted_price\":215.67,\"discount_percent\":100,\"availability\":true},{\"id\":9,\"name\":\"Overalls\",\"category\":\"Full Body Outfits\",\"retail_price\":374.0,\"discounted_price\":321.64,\"discount_percent\":100,\"availability\":true},{\"id\":11,\"name\":\"Cargos\",\"category\":\"Bottoms\",\"retail_price\":498.0,\"discounted_price\":428.28,\"discount_percent\":100,\"availability\":true},{\"id\":14,\"name\":\"Dress\",\"category\":\"Full Body Outfits\",\"retail_price\":175.0,\"discounted_price\":140.0,\"discount_percent\":100,\"availability\":true},{\"id\":15,\"name\":\"Trainers\",\"category\":\"Footwear\",\"retail_price\":228.0,\"discounted_price\":184.68,\"discount_percent\":100,\"availability\":true},{\"id\":16,\"name\":\"Tracksuit\",\"category\":\"Full Body Outfits\",\"retail_price\":471.0,\"discounted_price\":423.9,\"discount_percent\":100,\"availability\":false},{\"id\":17,\"name\":\"Tailcoat\",\"category\":\"Full Body Outfits\",\"retail_price\":307.0,\"discounted_price\":254.81,\"discount_percent\":100,\"availability\":true},{\"id\":18,\"name\":\"Vest\",\"category\":\"Tops\",\"retail_price\":446.0,\"discounted_price\":392.48,\"discount_percent\":100,\"availability\":true},{\"id\":21,\"name\":\"Dungarees\",\"category\":\"Full Body Outfits\",\"retail_price\":437.0,\"discounted_price\":362.71,\"discount_percent\":100,\"availability\":false},{\"id\":6,\"name\":\"Shawl\",\"category\":\"Accessories\",\"retail_price\":325.45,\"discounted_price\":260.36,\"discount_percent\":7,\"availability\":true},{\"id\":10,\"name\":\"Cufflinks\",\"category\":\"Accessories\",\"retail_price\":284.0,\"discounted_price\":227.2,\"discount_percent\":20,\"availability\":true},{\"id\":2,\"name\":\"Shoes\",\"category\":\"Footwear\",\"retail_price\":150.0,\"discounted_price\":123.0,\"discount_percent\":18,\"availability\":false},{\"id\":12,\"name\":\"Poncho\",\"category\":\"Accessories\",\"retail_price\":350.0,\"discounted_price\":283.5,\"discount_percent\":19,\"availability\":true},{\"id\":19,\"name\":\"Suit\",\"category\":\"Full Body Outfits\",\"retail_price\":125.0,\"discounted_price\":100.0,\"discount_percent\":36,\"availability\":false},{\"id\":20,\"name\":\"Catsuit\",\"category\":\"Full Body Outfits\",\"retail_price\":250.0,\"discounted_price\":200.0,\"discount_percent\":14,\"availability\":false},{\"id\":13,\"name\":\"Cummerbund\",\"category\":\"Accessories\",\"retail_price\":500.0,\"discounted_price\":450.0,\"discount_percent\":8,\"availability\":false}]";
 
         assertTrue
         (
             ResultMatcher.matchJsonArray
             (
-                mockMvc.perform (get("/products"))
+                mockMvc.perform (get ("/products"))
                        .andExpect (status().isOk())
                        .andReturn()
                        .getResponse()
@@ -1162,14 +1185,27 @@ public class ProductsControllerTest
     *
     * It tests truncating the product table
     */
-//   @Test
-//   @Order(19)
-//    public void clearProduct() throws Exception
-//    {
-//        mockMvc.perform
-//        (
-//            post ("/clear")
-//        )
-//        .andExpect (status().isOk());
-//    }
+   @Test
+   @Order(19)
+    public void clearProduct() throws Exception
+    {
+       String res = "[]";
+       
+       mockMvc.perform (delete ("/clear"))
+               .andExpect (status().isOk());
+        
+       assertTrue
+       (
+           ResultMatcher.matchJsonArray
+           (
+               mockMvc.perform (get ("/products"))
+                      .andExpect (status().isOk())
+                      .andReturn()
+                      .getResponse()
+                      .getContentAsString(),
+               res,
+               true
+           )
+       );
+    }
 }
