@@ -1,9 +1,0 @@
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/interfaces/ProductDao.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/Application.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/service/ProductService.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/model/ProductModel.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/model/UpdateData.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/controller/ProductsController.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/model/Product.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/DebugLogger.java
-/usr/local/src/GraalVM/src/main/java/com/hackerrank/eshopping/product/dashboard/model/Status.java

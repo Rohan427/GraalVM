@@ -1482,4 +1482,21 @@ public class ProductsControllerTest
             )
         );
     }
+    
+    /**
+    *
+    * @throws Exception
+    *
+    * It tests truncating the product table
+    */
+   @Test
+   @Order(18)
+    public void clearProduct() throws Exception
+    {
+        mockMvc.perform
+        (
+            post ("/clear")
+        )
+        .andExpect (status().isOk());
+    }
 }

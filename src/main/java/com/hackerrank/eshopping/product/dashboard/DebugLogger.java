@@ -5,12 +5,16 @@
  */
 package com.hackerrank.eshopping.product.dashboard;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Paul G. Allen <pgallen@gmail.com>
  */
-public class DebugLogger
+public class DebugLogger implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+    
     public static void debug (boolean enable, String message)
     {
         if (enable)

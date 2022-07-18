@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<changeSet author="pgallen" id="_10">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter="/" splitStatements="false"  stripComments="false" 
+           path="testdb/testdb/Oracle_Database_12cR2/DataObjects/Structure_Type/MDSYS.SDO_GEOMETRY.sql"/>
+</changeSet>
+<changeSet author="pgallen" id="_20">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter="/" splitStatements="false"  stripComments="false" 
+           path="testdb/testdb/Oracle_Database_12cR2/DataObjects/Structure_Type/XMLTYPE.sql"/>
+</changeSet>
+<changeSet author="pgallen" id="_30">
+  <sqlFile dbms="oracle" encoding="UTF-8" endDelimiter=";" splitStatements="true"  stripComments="false" 
+           path="testdb/testdb/Oracle_Database_12cR2/DataObjects/Table/Product.sql"/>
+</changeSet>
+</databaseChangeLog>

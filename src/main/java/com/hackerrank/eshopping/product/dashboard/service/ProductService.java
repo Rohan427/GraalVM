@@ -9,20 +9,25 @@ import com.hackerrank.eshopping.product.dashboard.DebugLogger;
 import com.hackerrank.eshopping.product.dashboard.interfaces.ProductDao;
 import com.hackerrank.eshopping.product.dashboard.model.Product;
 import com.hackerrank.eshopping.product.dashboard.model.ProductModel;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Paul G. Allen <pgallen@gmail.com>
  */
 @Service
-public class ProductService
+public class ProductService implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+    
     private final boolean DEBUG = true;
     @Autowired ProductDao productDao;
 
@@ -149,5 +154,11 @@ public class ProductService
     public void deleteProduct (Long id)
     {
         productDao.deleteById (id);
+    }
+    
+    @Transactional
+    public void truncateTable()
+    {
+        productDao.truncateTable();
     }
 }

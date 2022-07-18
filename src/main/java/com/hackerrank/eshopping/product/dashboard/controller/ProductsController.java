@@ -5,6 +5,8 @@ import com.hackerrank.eshopping.product.dashboard.model.Product;
 import com.hackerrank.eshopping.product.dashboard.model.Status;
 import com.hackerrank.eshopping.product.dashboard.model.UpdateData;
 import com.hackerrank.eshopping.product.dashboard.service.ProductService;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,9 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-public class ProductsController
+public class ProductsController implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private final boolean DEBUG = true;
     @Autowired ProductService productService;
 
@@ -236,6 +239,18 @@ public class ProductsController
         Status status = new Status();
         
         DebugLogger.debug (DEBUG, "In getStatus");
+        
+        return new ResponseEntity<> (status, HttpStatus.OK);
+    }
+    
+    @DeleteMapping (value = "/clear")
+    public ResponseEntity<Status> clearProducts()
+    {
+        Status status = new Status();
+        
+        DebugLogger.debug (DEBUG, "In clearProducts");
+        
+        productService.truncateTable();
         
         return new ResponseEntity<> (status, HttpStatus.OK);
     }

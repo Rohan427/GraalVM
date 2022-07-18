@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 public class UpdateData implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+    
     private Double retail_price;
     private Double discounted_price;
     private Boolean availability;

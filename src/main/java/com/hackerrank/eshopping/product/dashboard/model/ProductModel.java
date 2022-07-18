@@ -180,4 +180,17 @@ public class ProductModel implements Serializable
     {
         this.discount_percent = discount_percent;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Product [id = " + id
+               + ", name = " + name
+               + ", category = " + category
+               + ",availability = " + availability
+               + ", retail_price = " + retail_price
+               + ", discounted_price = " + discounted_price
+               + ".discount_percent = " + discount_percent
+               + "]";
+    }
 }
