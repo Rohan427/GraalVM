@@ -1,0 +1,18 @@
+
+Full JAR buld time: echo 8248518307ns
+8248518us
+8248ms
+8s
+
+
+Docker Linux image buld time: echo 75117481607ns
+75117481us
+75117ms
+75s
+
+
+Docker perftest image buld time: echo 35645565224ns
+35645565us
+35645ms
+35s
+
