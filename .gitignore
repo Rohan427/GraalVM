@@ -3,3 +3,5 @@
 .settings/org.eclipse.m2e.core.prefs
 
 *.ods#
+
+.sdkmanrc.orig

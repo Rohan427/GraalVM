@@ -340,6 +340,7 @@
 					            <env>
 					                <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
 					            </env>
+					            <name>perftest/tinynative:${project.version}</name>
 					        </image>
 					        
 					        <!-- Freeze the image version if needed >
@@ -488,6 +489,7 @@
 					            <env>
 					                <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
 					            </env>
+					            <name>perftest/fullnative:${project.version}</name>
 					        </image>
 					        
 					        <!-- Freeze the image version if needed >
@@ -619,6 +621,7 @@
 					            <env>
 					                <BP_NATIVE_IMAGE>false</BP_NATIVE_IMAGE>
 					            </env>
+					            <name>perftest/tinyjvm:${project.version}</name>
 					        </image>
 					        
 					        <!-- Freeze the image version if needed >
