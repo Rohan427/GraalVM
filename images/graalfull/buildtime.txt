@@ -1,6 +1,7 @@
 
-Full JAR buld time: echo 1263194525040ns
-1263194525us
-1263194ms
-1263s
+Full Native build time:
+733378240599ns
+733378240us
+733378ms
+733s
 

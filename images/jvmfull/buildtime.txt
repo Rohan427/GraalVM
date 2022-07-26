@@ -1,18 +1,21 @@
 
-Full JAR buld time: echo 9301075801ns
-9301075us
-9301ms
-9s
+Full JAR build time:
+8541500246ns
+8541500us
+8541ms
+8s
 
 
-Docker Linux image buld time: echo 78572520700ns
-78572520us
-78572ms
-78s
+Docker Linux image build time:
+74756305561ns
+74756305us
+74756ms
+74s
 
 
-Docker perftest-jvmfull image buld time: echo 64186033665ns
-64186033us
-64186ms
-64s
+Docker perftest-jvmfull image build time:
+33846993083ns
+33846993us
+33846ms
+33s
 

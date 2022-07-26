@@ -1,6 +1,7 @@
 
-Full JAR buld time: echo 80301464251ns
-80301464us
-80301ms
-80s
+Tiny JVM build time:
+88265632699ns
+88265632us
+88265ms
+88s
 

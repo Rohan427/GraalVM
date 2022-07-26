@@ -60,7 +60,8 @@ DOCKERPORT="8000"
 function timeDiff()
 {
     echo >> $2
-    echo "$1 buld time:" >> $2 echo "$(($ENDTIME-$BEGINTIME))ns" >> $2
+    echo "$1 build time:" >> $2
+    echo "$(($ENDTIME-$BEGINTIME))ns" >> $2
     echo "$(($(($ENDTIME-$BEGINTIME))/1000))us" >> $2
     echo "$(($(($ENDTIME-$BEGINTIME))/1000000))ms" >> $2
     echo "$(($(($ENDTIME-$BEGINTIME))/1000000000))s" >> $2
@@ -75,6 +76,34 @@ function processHeader()
     echo "P          $1"
     echo "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
     echo
+}
+
+
+function cleanTinyGraal()
+{
+    rm -f ${GRAALTINYPATH}*
+    rm -f ${GRAALTINYPATH}${BUILDTIME}
+}
+
+
+function cleanFullGraal()
+{
+    rm -f ${GRAALFULLPATH}*
+    rm -f ${GRAALFULLPATH}${BUILDTIME}
+}
+
+
+function cleanFullJvm()
+{
+    rm -f ${JVMFULLPATH}*
+    rm -f ${JVMFULLPATH}${BUILDTIME}
+}
+
+
+function cleanTinyJvm()
+{
+    rm -f ${JVMTINYPATH}*
+    rm -f ${JVMTINYPATH}${BUILDTIME}
 }
 
 
@@ -105,6 +134,7 @@ function buildFullJVM()
 {
     processHeader "Build full JVM JAR file..."
     sdk use java $JVMJAVA
+    cleanFullJvm
     BEGINTIME=$(date +%s%N)
     mvn package -Ppg-jvm
     ENDTIME=$(date +%s%N)
@@ -129,7 +159,7 @@ function buildFullJVM()
         then
             timeDiff "Docker Linux image" ${JVMFULLPATH}${BUILDTIME}
 # Build Full JVM Docker image
-            processHeader "Build full JVM Docker image..."
+            processHeader "Build Full JVM Docker image..."
             cd ${JVMFULLPATH}
             createJvmTestDockerfile
 
@@ -150,7 +180,7 @@ function buildFullJVM()
             EXITNUM=2
         fi
     else
-        echo "Build of JVM full JAR failed with $EXITNUM"
+        echo "Build of JVM Full JAR failed with $EXITNUM"
         EXITNUM=1
     fi
 }
@@ -158,8 +188,9 @@ function buildFullJVM()
 
 function buildTinyJVM()
 {
-    processHeader "Build tiny JVM image..."
+    processHeader "Build Tiny JVM image..."
     sdk use java $JVMJAVA
+    cleanTinyJvm
     BEGINTIME=$(date +%s%N)
     mvn spring-boot:build-image -Ppg-jvm-image -DskipTests
     ENDTIME=$(date +%s%N)
@@ -168,10 +199,10 @@ function buildTinyJVM()
     if [[ $EXITNUM -eq 0 ]];
     then
         rm -f ${JVMTINYPATH}${BUILDTIME}
-        timeDiff "Full JAR" ${JVMTINYPATH}${BUILDTIME}
+		timeDiff "Tiny JVM" ${JVMTINYPATH}${BUILDTIME}
         mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${JVMTINYPATH}${IMAGEBASE}-${JVMTINY}-${VERSION}.jar"
     else
-        echo "Build of JVM full JAR failed with $EXITNUM"
+        echo "Build of Tiny JVM failed with $EXITNUM"
         EXITNUM=4
     fi
 }
@@ -179,8 +210,9 @@ function buildTinyJVM()
 
 function buildfFullGraal()
 {
-    processHeader "Build Full GraalVM native image..."
+    processHeader "Build Full GraalVM Native image..."
     sdk use java $GRAALJAVA
+    cleanFullGraal
     BEGINTIME=$(date +%s%N)
     mvn spring-boot:build-image -Ppg-native-large -DskipTests
     ENDTIME=$(date +%s%N)
@@ -189,10 +221,10 @@ function buildfFullGraal()
     if [[ $EXITNUM -eq 0 ]];
     then
         rm -f ${GRAALFULLPATH}${BUILDTIME}
-        timeDiff "Full JAR" ${GRAALFULLPATH}${BUILDTIME}
+        timeDiff "Full Native" ${GRAALFULLPATH}${BUILDTIME}
         mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${GRAALFULLPATH}${IMAGEBASE}-${GRAALFULL}-${VERSION}.jar"
     else
-        echo "Build of Full GraalVM native failed with $EXITNUM"
+        echo "Build of Full GraalVM Native failed with $EXITNUM"
         EXITNUM=5
     fi
 }
@@ -202,6 +234,7 @@ function buildTinyGraal()
 {
     processHeader "Build Tiny GraalVM native image..."
     sdk use $GRAALJAVA
+    cleanTinyGraal
     BEGINTIME=$(date +%s%N)
     mvn spring-boot:build-image -Ppg-native-tiny -DskipTests
     ENDTIME=$(date +%s%N)
@@ -210,10 +243,10 @@ function buildTinyGraal()
     if [[ $EXITNUM -eq 0 ]];
     then
         rm -f ${GRAALTINYPATH}${BUILDTIME}
-        timeDiff "Full JAR" ${GRAALTINYPATH}${BUILDTIME}
+        timeDiff "Tiny Native" ${GRAALTINYPATH}${BUILDTIME}
         mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${GRAALTINYPATH}${IMAGEBASE}-${GRAALTINY}-${VERSION}.jar"
     else
-        echo "Build of Tiny GraalVM native failed with $EXITNUM"
+        echo "Build of Tiny GraalVM Native failed with $EXITNUM"
         EXITNUM=5
     fi
 }
@@ -227,27 +260,23 @@ function prune()
     docker system prune -a
 }
 
+
 function clean()
 {
     processHeader "Clean build folder..."
     mvn clean
-    rm -f ${GRAALTINYPATH}*
-    rm -f ${GRAALTINYPATH}${BUILDTIME}
 
-    rm -f ${GRAALFULLPATH}*
-    rm -f ${GRAALFULLPATH}${BUILDTIME}
-
-    rm -f ${JVMTINYPATH}*
-    rm -f ${JVMTINYPATH}${BUILDTIME}
-
-    rm -f ${JVMFULLPATH}*
-    rm -f ${JVMFULLPATH}${BUILDTIME}
+    cleanTinyGraal
+    cleanFullGraal
+    cleanFullJvm
+    cleanTinyJvm
 }
 
 
 function buildAll()
 {
     processHeader "Build all images..."
+
     if [[ $EXITNUM -eq 0 ]];
     then
 # Build Full JVM JAR
@@ -279,7 +308,7 @@ function buildAll()
 
 function _help()
 {
-    processheader "mvnw commands"
+    processHeader "mvnw commands"
     echo "help        | List commands"
     echo "------------------------------------------------------------"
     echo "prune       | Stops all running Docker containers."
@@ -299,10 +328,13 @@ function _help()
     echo "tinyjvm     | Builds a small Docker image using a Java 11"
     echo "            | HotSpot compiler."
     echo "------------------------------------------------------------"
-    echo "fullgraal   | Builds a Docker image using a the full GraalVM"
+    echo "fullgraal   | Builds a Docker image using the full GraalVM"
     echo "            | native image AOT compiler."
     echo "------------------------------------------------------------"
-    echo ""
+    echo "tinygraal   | Builds a Docker image using the tiny GraalVM"
+    echo "            | native image AOT compiler."
+    echo "------------------------------------------------------------"
+
 }
 
 if [[ $# -eq 0 ]];
@@ -337,9 +369,8 @@ then
     clean
 elif [[ $1 == "install" ]];
 then
-    processHeader "Installing a fesh build. This may take several munites."
+    processHeader "Installing a fesh build. This may take several minutes."
     prune
-    clean
     buildAll
 elif [[ $1 == "help" ]];
 then
