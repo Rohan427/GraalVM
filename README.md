@@ -1,8 +1,8 @@
-# SpringBoot GraalVM Native Image and JVM Performance Comparison
+# Spring Boot GraalVM Native Image and JVM Performance Comparison
 
 ## 1 Overview
 
-This project was used to perform a brief and basic perfomance and viablity study of a Spring Boot REST API using a standard JVM Docker image and Docker images implementing the AOT GraalVM native compiler.
+This project was used to perform a brief and basic performance and viability study of a Spring Boot REST API using a standard JVM Docker image and Docker images implementing the AOT GraalVM native compiler.
 
 ### 1.1 What is GraalVM and why do I care?
 
@@ -16,7 +16,7 @@ This project is not a comprehensive evaluation of a complex application. It is i
 
 ### 1.3 Application
 
-The application is a Spring Boot application using a REST JSON interface, an embeded Tomcat application server, and Spring JPA and Hibernate database interfaces. Junit is used for build verification and validation testing of the resulting executable JAR.
+The application is a Spring Boot application using a REST JSON interface, an embedded Tomcat application server, and Spring JPA and Hibernate database interfaces. JUnit is used for build verification and validation testing of the resulting executable JAR.
 
 ### 1.4 Images
 
@@ -43,7 +43,7 @@ The project build results in four (4) images. The first image is the comparison 
 - Maven 3+
 - Spring Boot 2.7.0
 - PostgreSQL 9.2.24
-- PostgreSQL [JDBC Driver 42.4.0](https://jdbc.postgresql.org/download/postgresql-42.4.0.jar) (including in the project)
+- PostgreSQL [JDBC Driver 42.4.0](https://jdbc.postgresql.org/download/postgresql-42.4.0.jar) (included in the project)
 - Docker 20.10.17
 - OpenJDK Java 11.0.12 or equivalent
 - GraalVM AOT 21.1.0.r11
@@ -64,9 +64,9 @@ The Linux base image (Full JVM) is used to build a somewhat standard Docker imag
 
 The three images compared to the base Full JVM image are as follows:
 
-- Tiny JVM: Built using the Spring Boot OCI image builder
-- Full Native: Built using the Spring Boot Native OCI compiler with full Java support.
-- Tiny Native: Built using the Spring Boot Native OCI compiler with minimum Java support.
+- Tiny JVM: Built using the Spring Boot OCI image builder.
+- Full Native: Built using the Spring Boot OCI image builder with full Java support.
+- Tiny Native: Built using the Spring Boot OCI image builder with minimum Java support.
 
 These three images provide a rounded comparison of the largest and smallest functional images that can be built using the Java HotSpot JIT compiler and the GraalVM AOT compiler.
 
@@ -86,7 +86,7 @@ As with any Docker build process, verify that Docker is running and that you are
 
 Building is best done using the ```mvnw``` script. It is possible to manually use Maven to builds the different profiles, but it is not advised to use an IDE to build the images. As mentioned above, the GraalVM images require a different build process and to this engineer’s knowledge IDE’s do not yet support the GraalVM AOT compiler and execution environment.
 
-Docker and SdkMan are required to be installed. If the buld process fails due to a missing Java complier, use sdkMan on the command line to install the correct compiler versions locally:
+Docker and SdkMan are required to be installed. If the build process fails due to a missing Java compiler, use sdkMan on the command line to install the correct compiler versions locally:
 
 ```
 sdk install java 21.1.0.r11-grl
@@ -140,3 +140,35 @@ There are five (5) Maven profiles in the pom:
 - pg-native-tiny: The ```tinygraal``` Docker image build. Uses the Spring AOT plugins.
 - pg-native-large: The ```fullgraal``` Docker image build. Uses the Spring AOT plugins.
 - pg-jvm-image: The ```tinyjvm``` Docker image build. Uses the Spring JIT tiny plugins.
+
+## 4 GraalVM Native Image Nuances
+
+### 4.1 The AOT Compiler Process in a Nutshell
+
+Unlike other languages, Java does a lot of things at runtime that can not be determined at compile time. This works fine with the JIT compiler and JVM due to the extra information provided within the JVM and handled by the JIT compiler while the application is running. With a native image, there is no JVM and the AOT compiler is not running with the application. To overcome this, part of the native image process is to actually simulate a run of the application and trace program flow. Doing this the AOT compiler can determine to some extent what classes may be needed at run time and include them in the completed image. The downside is that compile times are far longer that when creating a standard JAR (although the standard JAR is still created). A typical build may go from a few seconds for a standard JAR build to several minutes for a native image build, not including the Docker process of building a Docker image.
+
+### 4.2 Java Reflection
+
+The traditional JVM includes a lot of information about the running application. It is this information that allows reflection in Java to work as it does. The JVM contains the data necessary for the JIT compiler to determine which class to load for objects that use reflection.
+
+A GraalVM native image compiled with the AOT compiler does not have this extra information in a JVM that it can call upon. At build time it is not known what class might need to be instantiated at run time when a class is loaded. This may cause problems with a native application at run time resulting in class not found exceptions and similar errors. It is for this reason that some core Java libraries and third party libraries may not work properly out of the box when compiled with the AOT compiler. One such set of libraries that may cause these errors is the Spring Framework especially when using annotation and dependency injection. There is a way around this issue in many cases.
+
+### 4.3 Spring Boot, Spring JPA, and @TypeHint
+
+The Spring framework depends heavily on reflection for its dependency injection. If annotation, IoC, and other Spring features that use reflection are not used (but then why use Spring at all?) then these issues may be resolved. The Spring team has worked hard on making Spring compatible with the AOT compiler and native builds, but there are some issues still remaining and some deep reflection problems that are still to be worked out, and not just with the Spring Framework. One workaround is through the use of the ```@TypeHint``` annotation. This is used in this project to assist the AOT compiler with one such problem regarding Hibernate and PostgreSQL. This annotation gives the compiler a hint that a class may be needed at runtime. In the case of this small application, ```Application.java``` includes this annotation so that the correct Hibernate Dialect class is available at run time.
+
+The use of annotations for JPA, dependency injection, etc. may also require the use of ```@TypeHint``` if the AOT compiler can’t figure out at build time that  s class may be needed at run time. The Spring Boot Native Image and GraalVM AOT compiler documentation document how to deal with these issues.
+
+### 4.4 External Libraries
+
+As of this writing, some external libraries do not support native images and others need special treatment (such as Hibernate as explained in the previous section) so that they play nice. It is for this reason that the JUnit tests are currently disabled for the native image Maven profiles. Though JUnit should currently be supported, there were some issues getting it to work properly and unit testing is typically not needed when a standard JVM build is available for testing.
+
+With that said, current libraries that may not directly support native images may be configured to work with some trial and error and the use of ```@TypeHint``` and other mechanisms provided by Oracle for the GraalVM AOT compiler.
+
+### 4.5 Application Servers
+
+Currently the Tomcat embedded server used by Spring Boot supports native images. In addition Oracle WebLogic 14.x supports the use of the GraalVM and native images up through Java 17.
+
+### 4.6 The Docker Build Process
+
+Because the native image provided by the AOT compiler is machine code versus Java byte code, building a Docker image requires an extra step. In order to create a compatible Docker image, a Docker build image is generated for building the application. This can be accomplished through the use of a Dockerfile that uses a build image as an intermediate stage, or through the use of the Spring Maven plugins and build packs that do this for us. In the case of this project, the native images are built with the plugin. The plugin will create a Docker build image, build the application using that image, and when finished remove the build image leaving he final application native Docker image in the repository.
