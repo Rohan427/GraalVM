@@ -1,10 +1,11 @@
 #!/bin/bash
 
+# Required so SdkMan works within a shell script
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Build author
-AUTHOR="\"com.randomlogic.graaltest.author\"=\"Paul Allen <pgallen@randomlogic.net>\""
+AUTHOR="\"com.randomlogic.perftest.author\"=\"Paul Allen <pgallen@randomlogic.net>\""
 
 # Java versions to use
 JVMJAVA="11.0.12-open"
@@ -144,7 +145,7 @@ function buildFullJVM()
     then
         rm -f ${JVMFULLPATH}${BUILDTIME}
         timeDiff "Full JAR" ${JVMFULLPATH}${BUILDTIME}
-        mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${JVMFULLPATH}${IMAGEBASE}-${JVMFULL}-${VERSION}.jar"
+        mv -f "${BASEPATH}target/perftest-1.2.jar" "${JVMFULLPATH}${IMAGEBASE}-${JVMFULL}-${VERSION}.jar"
         cp "${EXTRAS}postgresql-42.4.0.jar" "${JVMFULLPATH}"
 
 # Build full Docker image
@@ -200,7 +201,7 @@ function buildTinyJVM()
     then
         rm -f ${JVMTINYPATH}${BUILDTIME}
 		timeDiff "Tiny JVM" ${JVMTINYPATH}${BUILDTIME}
-        mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${JVMTINYPATH}${IMAGEBASE}-${JVMTINY}-${VERSION}.jar"
+        mv -f "${BASEPATH}target/perftest-1.2.jar" "${JVMTINYPATH}${IMAGEBASE}-${JVMTINY}-${VERSION}.jar"
     else
         echo "Build of Tiny JVM failed with $EXITNUM"
         EXITNUM=4
@@ -222,7 +223,7 @@ function buildfFullGraal()
     then
         rm -f ${GRAALFULLPATH}${BUILDTIME}
         timeDiff "Full Native" ${GRAALFULLPATH}${BUILDTIME}
-        mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${GRAALFULLPATH}${IMAGEBASE}-${GRAALFULL}-${VERSION}.jar"
+        mv -f "${BASEPATH}target/perftest-1.2.jar" "${GRAALFULLPATH}${IMAGEBASE}-${GRAALFULL}-${VERSION}.jar"
     else
         echo "Build of Full GraalVM Native failed with $EXITNUM"
         EXITNUM=5
@@ -233,7 +234,7 @@ function buildfFullGraal()
 function buildTinyGraal()
 {
     processHeader "Build Tiny GraalVM native image..."
-    sdk use $GRAALJAVA
+    sdk use java $GRAALJAVA
     cleanTinyGraal
     BEGINTIME=$(date +%s%N)
     mvn spring-boot:build-image -Ppg-native-tiny -DskipTests
@@ -244,7 +245,7 @@ function buildTinyGraal()
     then
         rm -f ${GRAALTINYPATH}${BUILDTIME}
         timeDiff "Tiny Native" ${GRAALTINYPATH}${BUILDTIME}
-        mv -f "${BASEPATH}target/hackerrank-app-1.2-SNAPSHOT.jar" "${GRAALTINYPATH}${IMAGEBASE}-${GRAALTINY}-${VERSION}.jar"
+        mv -f "${BASEPATH}target/perftest-1.2.jar" "${GRAALTINYPATH}${IMAGEBASE}-${GRAALTINY}-${VERSION}.jar"
     else
         echo "Build of Tiny GraalVM Native failed with $EXITNUM"
         EXITNUM=5

@@ -5,3 +5,5 @@
 *.ods#
 
 .sdkmanrc.orig
+
+*.swp

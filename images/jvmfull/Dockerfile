@@ -1,6 +1,6 @@
 FROM corretto/java-11:1.2
 
-LABEL "com.randomlogic.graaltest.author"="Paul Allen <pgallen@randomlogic.net>"
+LABEL "com.randomlogic.perftest.author"="Paul Allen <pgallen@randomlogic.net>"
 
 WORKDIR /
 

@@ -1,0 +1,1668 @@
+{
+	"info": {
+		"_postman_id": "295b2c70-d9a1-4b59-b630-257e040d59a6",
+		"name": "GraalVM Test API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21780817"
+	},
+	"item": [
+		{
+			"name": "Get Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>",
+							"{",
+							"    pm.response.to.have.status (200);",
+							"});",
+							"",
+							"pm.test(\"Status\", () =>",
+							"{",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect (jsonData.status).to.eql (\"OK\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}status",
+					"host": [
+						"{{BaseURL}}status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dressing Gown",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"name\": \"Dressing Gown\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 303.0,\n    \"discounted_price\": 251.49,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Shoes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"name\": \"Shoes\",\n    \"category\": \"Footwear\",\n     \"retail_price\": 150.0,\n     \"discounted_price\": 123.0,\n     \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Nightgown",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 3,\n    \"name\": \"Nightgown\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 307.0,\n    \"discounted_price\": 254.81,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Boots",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4,\n    \"name\": \"Boots\",\n    \"category\": \"Footwear\",\n    \"retail_price\": 162.0,\n    \"discounted_price\": 132.84,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Shawl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 6,\n    \"name\": \"Shawl\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 283.0,\n    \"discounted_price\": 260.36,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Belt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 7,\n    \"name\": \"Belt\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 471.0,\n    \"discounted_price\": 419.19,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Kaftan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 8,\n    \"name\": \"Kaftan\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 237.0,\n    \"discounted_price\": 215.67,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Overalls",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 9,\n    \"name\": \"Overalls\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 374.0,\n    \"discounted_price\": 321.64,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cufflinks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 10,\n    \"name\": \"Cufflinks\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 284.0,\n    \"discounted_price\": 247.08,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cargos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 11,\n    \"name\": \"Cargos\",\n    \"category\": \"Bottoms\",\n    \"retail_price\": 498.0,\n    \"discounted_price\": 428.28,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Poncho",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 12,\n    \"name\": \"Poncho\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 280.0,\n    \"discounted_price\": 224.7,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cummerbund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 13,\n    \"name\": \"Cummerbund\",\n    \"category\": \"Accessories\",\n    \"retail_price\": 435.0,\n    \"discounted_price\": 400.2,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 14,\n    \"name\": \"Dress\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 175.0,\n    \"discounted_price\": 140.0,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Trainers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 15,\n    \"name\": \"Trainers\",\n    \"category\": \"Footwear\",\n    \"retail_price\": 228.0,\n    \"discounted_price\": 184.68,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tracksuit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 16,\n    \"name\": \"Tracksuit\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 471.0,\n    \"discounted_price\": 423.9,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tailcoat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 17,\n    \"name\": \"Tailcoat\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 307.0,\n    \"discounted_price\": 254.81,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Vest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 18,\n    \"name\": \"Vest\",\n    \"category\": \"Tops\",\n    \"retail_price\": 446.0,\n    \"discounted_price\": 392.48,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Suit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 19,\n    \"name\": \"Suit\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 158.0,\n    \"discounted_price\": 135.88,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Catsuit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 20,\n    \"name\": \"Catsuit\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 158.0,\n    \"discounted_price\": 135.88,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dungarees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 201\", () =>",
+							"            {",
+							"                pm.response.to.have.status (201);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 21,\n    \"name\": \"Dungarees\",\n    \"category\": \"Full Body Outfits\",\n    \"retail_price\": 437.0,\n    \"discounted_price\": 362.71,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 6 Update Retail Price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 325.45,\n    \"discounted_price\": 260.36,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/6",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 10 Update Discount Price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 284.0,\n    \"discounted_price\": 227.2,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/10",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 2 Update Availability to False",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 150.0,\n    \"discounted_price\": 123.0,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/2",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 12 Update Retail & Discount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 350.0,\n    \"discounted_price\": 283.5,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/12",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 19 Update Retail & Availability to false",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 125.0,\n    \"discounted_price\": 100.0,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/19",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 20 Update Discount & Availability to false",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 250.0,\n    \"discounted_price\": 200.0,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/20",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 13 Update Retail & Discount & Availability to false",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"            {",
+							"                pm.response.to.have.status (200);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 500.0,\n    \"discounted_price\": 450.0,\n    \"availability\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/13",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 25 Update Non-existent Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 400\", () =>",
+							"            {",
+							"                pm.response.to.have.status (400);",
+							"            }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"retail_price\": 311.0,\n    \"discounted_price\": 258.13,\n    \"availability\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/25",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 2 Find Product By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"Item is correct\", () =>",
+							"         {",
+							"             pm.expect (response.id).to.eql (2);",
+							"             pm.expect (response.name).to.eql (\"Shoes\");",
+							"             pm.expect (response.category).to.eql (\"Footwear\");",
+							"             pm.expect (response.retail_price).to.eql (150.0);",
+							"             pm.expect (response.discounted_price).to.eql (123.0);",
+							"             pm.expect (response.discount_percent).to.eql (18);",
+							"             pm.expect (response.availability).to.eql (false);",
+							"         }",
+							"        );",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/2",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item 25 Find Non-existing Product By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 404\", () =>",
+							"         {",
+							"             pm.response.to.have.status (404);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products/25",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"path": [
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Category Accessories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"Six (6) items returned\", () =>",
+							"         {",
+							"             pm.expect (response[0].id).to.eql (8);",
+							"             pm.expect (response[1].id).to.eql (10);",
+							"             pm.expect (response[2].id).to.eql (6);",
+							"             pm.expect (response[3].id).to.eql (12);",
+							"             pm.expect (response[4].id).to.eql (7);",
+							"             pm.expect (response[5].id).to.eql (13);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products?category=Accessories",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Accessories"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Non-existent Category Swimwear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"No items returned\", () =>",
+							"         {",
+							"             pm.expect (response).to.eql ([]);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products?category=Swimwear",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Swimwear"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Category and Available",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"Five (5) items returned\", () =>",
+							"         {",
+							"             pm.expect (response[0].id).to.eql (14);",
+							"             pm.expect (response[1].id).to.eql (1);",
+							"             pm.expect (response[2].id).to.eql (3);",
+							"             pm.expect (response[3].id).to.eql (17);",
+							"             pm.expect (response[4].id).to.eql (9);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products?category=Full Body Outfits&availability=true",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Full Body Outfits"
+						},
+						{
+							"key": "availability",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Category and NOT Available",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"Four (4) items returned\", () =>",
+							"         {",
+							"             pm.expect (response[0].id).to.eql (21);",
+							"             pm.expect (response[1].id).to.eql (16);",
+							"             pm.expect (response[2].id).to.eql (19);",
+							"             pm.expect (response[3].id).to.eql (20);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products?category=Full Body Outfits&availability=false",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Full Body Outfits"
+						},
+						{
+							"key": "availability",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Non-existing Category and Available",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"No items returned\", () =>",
+							"         {",
+							"             pm.expect (response).to.eql ([]);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products?category=Swimwear&availability=true",
+					"host": [
+						"{{BaseURL}}products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Swimwear"
+						},
+						{
+							"key": "availability",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"Status code is 200\", () =>",
+							"         {",
+							"             pm.response.to.have.status (200);",
+							"         }",
+							"        );",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test (\"Twenty (20) items returned\", () =>",
+							"         {",
+							"             pm.expect (response[0].id).to.eql (1);",
+							"             pm.expect (response[1].id).to.eql (3);",
+							"             pm.expect (response[2].id).to.eql (4);",
+							"             pm.expect (response[3].id).to.eql (7);",
+							"             pm.expect (response[4].id).to.eql (8);",
+							"             pm.expect (response[5].id).to.eql (9);",
+							"             pm.expect (response[6].id).to.eql (11);",
+							"             pm.expect (response[7].id).to.eql (14);",
+							"             pm.expect (response[8].id).to.eql (15);",
+							"             pm.expect (response[9].id).to.eql (16);",
+							"             pm.expect (response[10].id).to.eql (17);",
+							"             pm.expect (response[11].id).to.eql (18);",
+							"             pm.expect (response[12].id).to.eql (21);",
+							"             pm.expect (response[13].id).to.eql (6);",
+							"             pm.expect (response[14].id).to.eql (10);",
+							"             pm.expect (response[15].id).to.eql (2);",
+							"             pm.expect (response[16].id).to.eql (12);",
+							"             pm.expect (response[17].id).to.eql (19);",
+							"             pm.expect (response[18].id).to.eql (20);",
+							"             pm.expect (response[19].id).to.eql (13);",
+							"         }",
+							"        );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}products",
+					"host": [
+						"{{BaseURL}}products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Truncate Product Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>",
+							"{",
+							"    pm.response.to.have.status (200);",
+							"});",
+							"",
+							"pm.test(\"Status\", () =>",
+							"{",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect (jsonData.status).to.eql (\"OK\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}clear",
+					"host": [
+						"{{BaseURL}}clear"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

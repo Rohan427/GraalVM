@@ -5,9 +5,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hackerrank.eshopping.product.dashboard</groupId>
-    <artifactId>hackerrank-app</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <groupId>com.randomlogic.perftest.product.dashboard</groupId>
+    <artifactId>perftest</artifactId>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <properties>
