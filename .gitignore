@@ -7,3 +7,5 @@
 .sdkmanrc.orig
 
 *.swp
+
+.~lock.README.md#

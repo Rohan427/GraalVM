@@ -1,4 +1,4 @@
-# Spring Boot GraalVM Native Image and JVM Performance Comparison
+﻿# Spring Boot GraalVM Native Image and JVM Performance Comparison
 
 ## 1 Overview
 
@@ -103,9 +103,9 @@ The build script should select the correct compiler automatically.
 help        | List commands
 ------------------------------------------------------------
 prune       | Stops all running Docker containers.
-           | Removes all Docker containers.
-           | Prunes all Docker images.
-           | WARNING: ALL Docker images will be deleted!
+            | Removes all Docker containers.
+            | Prunes all Docker images.
+            | WARNING: ALL Docker images will be deleted!
 ------------------------------------------------------------
 clean       | Cleans generated files from the build folder.
 ------------------------------------------------------------
@@ -114,16 +114,16 @@ buildall    | Builds all four (4) images.
 install     | Runs prune, clean, buildall
 ------------------------------------------------------------
 fulljvm     | Builds a Docker image using an Amazon Linux
-           | Java 11 Docker image.
+            | Java 11 Docker image.
 ------------------------------------------------------------
 tinyjvm     | Builds a small Docker image using a Java 11
-           | HotSpot compiler.
+            | HotSpot compiler.
 ------------------------------------------------------------
 fullgraal   | Builds a Docker image using the full GraalVM
-           | native image AOT compiler.
+            | native image AOT compiler.
 ------------------------------------------------------------
 tinygraal   | Builds a Docker image using the tiny GraalVM
-           | native image AOT compiler.
+            | native image AOT compiler.
 ------------------------------------------------------------
 ```
 
@@ -145,12 +145,84 @@ Currently the Tomcat embedded server used by Spring Boot supports native images.
 
 Because the native image provided by the AOT compiler is machine code versus Java byte code, building a Docker image requires an extra step. In order to create a compatible Docker image, a Docker build image is generated for building the application. This can be accomplished through the use of a Dockerfile that uses a build image as an intermediate stage, or through the use of the Spring Maven plugins and build packs that do this for us. In the case of this project, the native images are built with the plugin. The plugin will create a Docker build image, build the application using that image, and when finished remove the build image leaving he final application native Docker image in the repository.
 
-## 6 Test methodology
+## 5 Test Methodology
 
+The reported differences by Oracle between using a HotSpot (JIT) compiler generated image and a Graal (AOT) generated native image are as follows:
 
+- An AOT image is smaller.
+- An AOT image startup time is faster.
+- An AOT image may have higher sustained performance.
+- A JIT image may have higher peak performance.
+- A JIT image may have lower initial performance.
 
-## 5 Performance Summary
-	
+Testing peak performance in a small application is a challenge and as of the time of this writing peak performance testing was not possible using the small app in this project.
+
+Considering the exploding use of OCI containers and Spring Boot, this project is focused on comparing a Spring Boot Dockerized REST application with using GraalVM and an OpenJDK JVM. Given there are multiple ways to build such applications, this engineer decided to use four builds for the comparison. All of the applications use the same Spring Boot application source code.
+
+1. Full JVM: An OpenJDK 11 compiled application dockerized with an optimized Linux image.
+2. Tiny JVM: The same compiled application using a Spring Maven buildpack plugin to dockerize an optimized Java 11 image.
+3. Full Graal: A Graal native image using the a Spring Boot Maven buildpack to dockerize a complete (full Java 11 features support) native image.
+4. Tiny Graal: A Graal native image using the a Spring Boot Maven buildpack to dockerize an image with only the Java 11 features that the application requires.
+
+### 5.1 Image Size
+
+One of the key features of the GraalVM is the lack of a JVM taking up memory and resources. When using the AOT compiler, an image is built with all class code included that it will ever need during runtime. This eliminates the requirement for extra code in a JVM. There are various ways to build a Graal native image that can include only what the application needs up to a complete set of Java features. In addition, a JVM may be provided with a minimal amount of Java support up to supporting all Java features.
+
+Given the number of variations of both GraalVM and JVM images that can be built, it was determined to use two of each: One with the minimum support needed to run the application, and one with all Java features included. This provides both ends of the spectrum for both types of images.
+
+Comparing the differences in image sizes is straight forward as Docker provides commands to check image sizes of images and running containers.
+
+### 5.2 Image/Application Startup
+
+A Java application using the HotSpot JIT compiler has a slow startup time due to the nature of the compiler and interpreter. This startup time is extended with using the Spring Framework due to dependency injection and the component scanning required. The GraalVM AOT compiler compiles everything and determines all necessary classes that are needed at application build time. For this reason component scanning and dependency injection are skipped allowing a far faster application startup.
+
+Enabling the Spring Boot banner (or rather, not disabling it) allows a container to be started up in a terminal and simply reading the startup time reported by Spring. Given that printing to a console is time consuming, these times are a worst case.
+
+### 5.3 Initial Performance
+
+When using a JVM, an application starts up using byte code which is run through an interpreter converting the Java byte code into native code for the machine it is running on. The JIT compiler run sin the background profiling the application and determining “hot spots” – pieces of code that are used more often than others – and compiling them into native code. When the native code is executed after this point, the application will run faster. This has two impacts on performance: A Java application is slower when it starts and when some methods are first executed, and peak performance of a Java application will improve to a point over time. 
+
+Initial performance may be tested by starting an application and measuring the time it takes to complete tasks for the first time, and then measuring the time again over successive executions of the same tasks. As these times will vary depending on many external variables (See section 5.6), the more times this test cycle is performed, the better the accuracy of the results. This test cycle is as follows:
+
+1. Start the application.
+2. Measure each separate task, or method as it is executed the first time.
+3. Measure the same task several more times.
+4. Discard the longest time(s) (See Section 5.6).
+5. Average the all times after the first measurement. (for sustained performance)
+6. Stop the application.
+7. Repeat as many times as practical.
+
+The Newman test script ```perftest.sh``` in the doc/test folder performs this cycle a configurable number of times.
+
+### 5.4 Sustained Performance
+
+As implied in the previous section, sustained performance is how fast the application can perform tasks over time. Sustained performance is a measure of overall application speed over many tasks where peak performance is generally the highest performance an application can reach with the same task repeatedly.
+
+Testing sustained performance is implemented with the ```perftest.sh``` script while also performing the initial performance test cycles described in Section 5.3.
+
+### 5.5 PostgreSQL Database
+
+Performance testing of a Dockerized PostgreSQL container is outside the scope of this project. For the purposes of this comparison, the database was installed on the host computer and was dedicated to this project only – it had no other schemas configured and only a single user. The use of a database is necessary to provide some real-world example of a Spring Boot REST web application performing some work for each REST endpoint. The use of the database provides CRUD endpoints for the REST API.
+
+### 5.6 Performance Impacts
+
+With today’s modern operating systems and considering that tall four of these images run as Docker containers, there are several factors that will influence performance. These factors include, but are not limited to, the following:
+
+- Host operating system processes.
+- Other Docker containers running.
+- Other user applications running.
+- Network speed (for web applications such as this one).
+- The number of processors used.
+- The amount of physical memory available.
+- The amount of virtual memory available.
+- Performance of external dependencies (PostgreSQL in our case).
+
+Any one or all of these factors may influence application performance through task switching and delays in responses for external dependencies and/or network communication. Typically, when these factors come into effect, the result is a much longer measurement of a given performance metric. For this reason these obvious anomalies are thrown out of the measurements or averaged out in overall performance calculations.
+
+The Newman built-in tests are used to produce all average performance tests to help eliminate these anomalies for overall results. Specific performance details for each database query type provided in the ```Summary.ods``` spreadsheet were manually compiled and in these cases the longest measured times (often up to ten times longer than all other times for the same query) were thrown out of the data set.
+
+## 6 Performance Summary
+
 ![image](https://user-images.githubusercontent.com/24968767/181781251-4ae11cc8-1523-4303-bc2c-d7c56e2f3af9.png)
 
 ![image](https://user-images.githubusercontent.com/24968767/181781996-9e92b3b9-d140-4edd-8067-3bd5a6bbf8a7.png)
