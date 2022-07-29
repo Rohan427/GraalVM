@@ -8,7 +8,7 @@ This project was used to perform a brief and basic performance and viability stu
 
 A standard Java Virtual Machine (JVM) uses a Just In Time (JIT) compiler to generate a program that can be run on any computer that can run a Java program. It works by generating byte code that is non-machine dependent at build time, and at run time it creates machine dependent code only where needed. It generates a lot of extra information in the JVM so that when the program is running, it can profile the program, find the bottlenecks, and make it run faster. The JIT compiler can improve peak performance of an application, but at the cost of a much slower startup times, slower initial run times, lower sustained performance, and greater memory usage.
 
-The GraalVM Ahead of Time (AOT) compiler, like a C/C++ compiler, compiles a Java application into native bye code for the machine it is built on. For this reason it does not need a JVM to store all the information for classes that might be used, extra information for profiling, and other information. A GraalVM native image can be a fraction of the size of the JIT version of the same application, use far less memory, load far faster, and have a higher sustained speed, but at the cost of slower peak throughput. In addition, because it uses native code for the machine it is built on, it is not a true “write once run anywhere” image, but Docker solves that problem. The final caveat is build times may be much longer that when using the standard JIT compiler.
+The GraalVM Ahead of Time (AOT) compiler, like a C/C++ compiler, compiles a Java application into native bye code for the machine it is built on. For this reason it does not need a JVM to store all the information for classes that might be used, extra information for profiling, and other information. A GraalVM native image can be a fraction of the size of the JIT version of the same application, use far less memory, load far faster, and have a higher sustained speed, but at the cost of slower peak throughput. In addition, because it uses native code for the machine it is built on, it is not a true image, but Docker solves that problem. The final caveat is build times may be much longer that when using the standard JIT compiler.
 
 ### 1.2 Scope
 
@@ -84,7 +84,7 @@ Spring Boot native image support is still in development with a first complete s
 
 As with any Docker build process, verify that Docker is running and that you are logged in.
 
-Building is best done using the ```mvnw``` script. It is possible to manually use Maven to builds the different profiles, but it is not advised to use an IDE to build the images. As mentioned above, the GraalVM images require a different build process and to this engineer’s knowledge IDE’s do not yet support the GraalVM AOT compiler and execution environment.
+Building is best done using the ```mvnw``` script. It is possible to manually use Maven to builds the different profiles, but it is not advised to use an IDE to build the images. As mentioned above, the GraalVM images require a different build process and to this engineers do not yet support the GraalVM AOT compiler and execution environment.
 
 Docker and SdkMan are required to be installed. If the build process fails due to a missing Java compiler, use sdkMan on the command line to install the correct compiler versions locally:
 
@@ -103,9 +103,9 @@ The build script should select the correct compiler automatically.
 help        | List commands
 ------------------------------------------------------------
 prune       | Stops all running Docker containers.
-            | Removes all Docker containers.
-            | Prunes all Docker images.
-            | WARNING: ALL Docker images will be deleted!
+           | Removes all Docker containers.
+           | Prunes all Docker images.
+           | WARNING: ALL Docker images will be deleted!
 ------------------------------------------------------------
 clean       | Cleans generated files from the build folder.
 ------------------------------------------------------------
@@ -114,50 +114,22 @@ buildall    | Builds all four (4) images.
 install     | Runs prune, clean, buildall
 ------------------------------------------------------------
 fulljvm     | Builds a Docker image using an Amazon Linux
-            | Java 11 Docker image.
+           | Java 11 Docker image.
 ------------------------------------------------------------
 tinyjvm     | Builds a small Docker image using a Java 11
-            | HotSpot compiler.
+           | HotSpot compiler.
 ------------------------------------------------------------
 fullgraal   | Builds a Docker image using the full GraalVM
-            | native image AOT compiler.
+           | native image AOT compiler.
 ------------------------------------------------------------
 tinygraal   | Builds a Docker image using the tiny GraalVM
-            | native image AOT compiler.
+           | native image AOT compiler.
 ------------------------------------------------------------
 ```
 
 **WARNING: The prune command may be dangerous.** This command will stop all Docker containers, remove them, and then delete all Docker images. It should ask if you wish to actually delete the images (it uses ```docker system prune -a``` which asks for verification). This command was added to make development and testing easier and to quickly clean up Docker containers and images.
 
-The ```fulljvm``` command is a multi-step build process. This process uses a “manual docker image process by pulling the Linux image, using it as a base image and copying the application JAR and JDBC driver, and putting the resulting image into the local repository.
-
-### 3.2 POM Profiles
-
-There are five (5) Maven profiles in the pom:
-
-- h2db-jvm-image: Used for initial development and testing. Not used for the comparison
-- pg-jvm: The ```fulljvm``` Jar build. It does not build a docker image, but only an executable JAR file.
-- pg-native-tiny: The ```tinygraal``` Docker image build. Uses the Spring AOT plugins.
-- pg-native-large: The ```fullgraal``` Docker image build. Uses the Spring AOT plugins.
-- pg-jvm-image: The ```tinyjvm``` Docker image build. Uses the Spring JIT tiny plugins.
-
-## 4 GraalVM Native Image Nuances
-
-### 4.1 The AOT Compiler Process in a Nutshell
-
-Unlike other languages, Java does a lot of things at runtime that can not be determined at compile time. This works fine with the JIT compiler and JVM due to the extra information provided within the JVM and handled by the JIT compiler while the application is running. With a native image, there is no JVM and the AOT compiler is not running with the application. To overcome this, part of the native image process is to actually simulate a run of the application and trace program flow. Doing this the AOT compiler can determine to some extent what classes may be needed at run time and include them in the completed image. The downside is that compile times are far longer that when creating a standard JAR (although the standard JAR is still created). A typical build may go from a few seconds for a standard JAR build to several minutes for a native image build, not including the Docker process of building a Docker image.
-
-### 4.2 Java Reflection
-
-The traditional JVM includes a lot of information about the running application. It is this information that allows reflection in Java to work as it does. The JVM contains the data necessary for the JIT compiler to determine which class to load for objects that use reflection.
-
-A GraalVM native image compiled with the AOT compiler does not have this extra information in a JVM that it can call upon. At build time it is not known what class might need to be instantiated at run time when a class is loaded. This may cause problems with a native application at run time resulting in class not found exceptions and similar errors. It is for this reason that some core Java libraries and third party libraries may not work properly out of the box when compiled with the AOT compiler. One such set of libraries that may cause these errors is the Spring Framework especially when using annotation and dependency injection. There is a way around this issue in many cases.
-
-### 4.3 Spring Boot, Spring JPA, and @TypeHint
-
-The Spring framework depends heavily on reflection for its dependency injection. If annotation, IoC, and other Spring features that use reflection are not used (but then why use Spring at all?) then these issues may be resolved. The Spring team has worked hard on making Spring compatible with the AOT compiler and native builds, but there are some issues still remaining and some deep reflection problems that are still to be worked out, and not just with the Spring Framework. One workaround is through the use of the ```@TypeHint``` annotation. This is used in this project to assist the AOT compiler with one such problem regarding Hibernate and PostgreSQL. This annotation gives the compiler a hint that a class may be needed at runtime. In the case of this small application, ```Application.java``` includes this annotation so that the correct Hibernate Dialect class is available at run time.
-
-The use of annotations for JPA, dependency injection, etc. may also require the use of ```@TypeHint``` if the AOT compiler can’t figure out at build time that  s class may be needed at run time. The Spring Boot Native Image and GraalVM AOT compiler documentation document how to deal with these issues.
+The ```fulljvm``` command is a multi-step build process. This process uses a t figure out at build time that  s class may be needed at run time. The Spring Boot Native Image and GraalVM AOT compiler documentation document how to deal with these issues.
 
 ### 4.4 External Libraries
 
@@ -173,6 +145,12 @@ Currently the Tomcat embedded server used by Spring Boot supports native images.
 
 Because the native image provided by the AOT compiler is machine code versus Java byte code, building a Docker image requires an extra step. In order to create a compatible Docker image, a Docker build image is generated for building the application. This can be accomplished through the use of a Dockerfile that uses a build image as an intermediate stage, or through the use of the Spring Maven plugins and build packs that do this for us. In the case of this project, the native images are built with the plugin. The plugin will create a Docker build image, build the application using that image, and when finished remove the build image leaving he final application native Docker image in the repository.
 
-## 5 performance Summary
+## 6 Test methodology
 
 
+
+## 5 Performance Summary
+	
+![image](https://user-images.githubusercontent.com/24968767/181781251-4ae11cc8-1523-4303-bc2c-d7c56e2f3af9.png)
+
+![image](https://user-images.githubusercontent.com/24968767/181781996-9e92b3b9-d140-4edd-8067-3bd5a6bbf8a7.png)
