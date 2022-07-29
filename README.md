@@ -45,8 +45,8 @@ The project build results in four (4) images. The first image is the comparison 
 - PostgreSQL 9.2.24
 - PostgreSQL [JDBC Driver 42.4.0](https://jdbc.postgresql.org/download/postgresql-42.4.0.jar) (included in the project)
 - Docker 20.10.17
-- OpenJDK Java 11.0.12 or equivalent
-- GraalVM AOT 21.1.0.r11
+- OpenJDK Java 11.0.12-open or equivalent
+- GraalVM AOT 22.1.0.r11-grl
 
 ### 2.1 Database
 
@@ -84,12 +84,12 @@ Spring Boot native image support is still in development with a first complete s
 
 As with any Docker build process, verify that Docker is running and that you are logged in.
 
-Building is best done using the ```mvnw``` script. It is possible to manually use Maven to builds the different profiles, but it is not advised to use an IDE to build the images. As mentioned above, the GraalVM images require a different build process and to this engineers do not yet support the GraalVM AOT compiler and execution environment.
+Building is best done using the ```mvnw``` script. It is possible to manually use Maven to build the different profiles, but it is not advised to use an IDE to build the images. As mentioned above, the GraalVM images require a different build process and to this engineer’s knwledge they do not yet support the GraalVM AOT compiler and execution environment.
 
 Docker and SdkMan are required to be installed. If the build process fails due to a missing Java compiler, use sdkMan on the command line to install the correct compiler versions locally:
 
 ```
-sdk install java 21.1.0.r11-grl
+sdk install java 22.1.0.r11-grl
 sdk install java 11.0.12-open
 ```
 
@@ -219,9 +219,11 @@ With today’s modern operating systems and considering that tall four of these 
 
 Any one or all of these factors may influence application performance through task switching and delays in responses for external dependencies and/or network communication. Typically, when these factors come into effect, the result is a much longer measurement of a given performance metric. For this reason these obvious anomalies are thrown out of the measurements or averaged out in overall performance calculations.
 
-The Newman built-in tests are used to produce all average performance tests to help eliminate these anomalies for overall results. Specific performance details for each database query type provided in the ```Summary.ods``` spreadsheet were manually compiled and in these cases the longest measured times (often up to ten times longer than all other times for the same query) were thrown out of the data set.
+The Newman built-in tests are used to produce all average performance tests to help eliminate these anomalies for overall results. Specific performance details for each database query type provided in the ```Summary.ods``` spreadsheet located in ```doc/reports``` were manually compiled and in these cases the longest measured times (often up to ten times longer than all other times for the same query) were thrown out of the data set.
 
 ## 6 Performance Summary
+
+The tables below show a summary of the performance tests. The tests showed a 30-40% improvement in performance of the GraalVM native images over the JVM images. The maximum image size was decreased by 97% over the standard Linux-JVM image. It is suspected that some of the faster tests ran up against database performance limitations which mya be an area for further testing and optimization.
 
 ![image](https://user-images.githubusercontent.com/24968767/181781251-4ae11cc8-1523-4303-bc2c-d7c56e2f3af9.png)
 
