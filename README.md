@@ -172,3 +172,7 @@ Currently the Tomcat embedded server used by Spring Boot supports native images.
 ### 4.6 The Docker Build Process
 
 Because the native image provided by the AOT compiler is machine code versus Java byte code, building a Docker image requires an extra step. In order to create a compatible Docker image, a Docker build image is generated for building the application. This can be accomplished through the use of a Dockerfile that uses a build image as an intermediate stage, or through the use of the Spring Maven plugins and build packs that do this for us. In the case of this project, the native images are built with the plugin. The plugin will create a Docker build image, build the application using that image, and when finished remove the build image leaving he final application native Docker image in the repository.
+
+## 5 performance Summary
+
+

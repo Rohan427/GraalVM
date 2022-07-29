@@ -1,21 +1,21 @@
 
 Full JAR build time:
-11024668767ns
-11024668us
-11024ms
-11s
+9932163187ns
+9932163us
+9932ms
+9s
 
 
 Docker Linux image build time:
-85671632238ns
-85671632us
-85671ms
-85s
+81767887973ns
+81767887us
+81767ms
+81s
 
 
 Docker perftest-jvmfull image build time:
-36214663989ns
-36214663us
-36214ms
-36s
+35968819329ns
+35968819us
+35968ms
+35s
 
