@@ -24,7 +24,7 @@ The project build results in four (4) images. The first image is the comparison 
 
 ### 1.5 Development, Build, and Test Environment
 
-- Intel i4770K 4.2GHz with 16GB DDR3
+- Intel i4770K 4.2GHz with 32GB DDR3
 - Onboard Intel graphics
 - 3TB SSD SATA Express storage
 - 9TB SATA 2 HDD storage
